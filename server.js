@@ -7,7 +7,7 @@ const { Server } = require('socket.io'); // 2. Add this
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: ["http://localhost:5173", "https://admin.socket.io"], credentials: true}));
+app.use(cors({ origin: ["*"], credentials: true}));
 
 // Serve your music
 app.use('/static-music', express.static(path.join(__dirname, 'music')));
@@ -15,7 +15,7 @@ app.use('/static-music', express.static(path.join(__dirname, 'music')));
 // 3. Create the Server
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: ["http://localhost:5173", "https://admin.socket.io"] , credentials: true} // Allow your Vite app
+  cors: { origin: ["*"] , credentials: true} // Allow your Vite app
 });
 
 io.on('connection', (socket) => {
