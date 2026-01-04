@@ -14,7 +14,7 @@ app.use('/static-music', express.static(path.join(__dirname, 'music')));
 // 3. Create the Server
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: "http://localhost:5173" } // Allow your Vite app
+  cors: { origin: "*" } // Allow your Vite app
 });
 
 io.on('connection', (socket) => {
