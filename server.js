@@ -1,4 +1,5 @@
 const express = require('express');
+const { instrument } = require('@socket.io/admin-ui')
 const cors = require('cors');
 const path = require('path');
 const http = require('http'); // 1. Add this
@@ -6,7 +7,7 @@ const { Server } = require('socket.io'); // 2. Add this
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: ["http://localhost:5173", "https://admin.socket.io"], credentials: true}));
 
 // Serve your music
 app.use('/static-music', express.static(path.join(__dirname, 'music')));
@@ -14,7 +15,7 @@ app.use('/static-music', express.static(path.join(__dirname, 'music')));
 // 3. Create the Server
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: "*" } // Allow your Vite app
+  cors: { origin: ["http://localhost:5173", "https://admin.socket.io"] , credentials: true} // Allow your Vite app
 });
 
 io.on('connection', (socket) => {
@@ -33,6 +34,7 @@ io.on('connection', (socket) => {
 
 app.get('/test', (req,res) => {res.send("-- msg from backend--")})
 
+instrument( io , { auth:false} )
 
 // 4. Use server.listen instead of app.listen
 server.listen(3001, () => console.log("listening on port 3001"));
