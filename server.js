@@ -31,5 +31,8 @@ io.on('connection', (socket) => {
   });
 });
 
+app.get('/test', (req,res) => {res.send("-- msg from backend--")})
+
+
 // 4. Use server.listen instead of app.listen
 server.listen(3001, () => console.log("listening on port 3001"));
